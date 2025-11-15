@@ -1,0 +1,12 @@
+pandas
+matplotlib
+seaborn
+nltk
+tqdm
+scikit-learn
+scipy
+numpy
+imbalanced-learn
+Django
+djangorestframework
+django-extensions
