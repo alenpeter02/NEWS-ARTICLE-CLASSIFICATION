@@ -182,3 +182,7 @@ POST http://127.0.0.1:8000/api/predict/
 * matplotlib
 * seaborn
 
+<img width="1468" height="369" alt="Screenshot 2025-11-16 033731" src="https://github.com/user-attachments/assets/077e06da-22aa-4394-8140-13219c5fca56" />
+
+<img width="1152" height="400" alt="image" src="https://github.com/user-attachments/assets/d4105360-be6c-49a4-bb64-19907da78f17" />
+
