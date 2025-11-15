@@ -1,82 +1,185 @@
-# News Article Classification Model
+# News Article Classification (Django + Machine Learning API)
 
-This project builds a **text classification model** that automatically predicts the **category of a news article** (for example: politics, sports, technology, or business) based on its textual content.  
-It demonstrates the complete workflow — from **data preprocessing** and **feature extraction** to **model training**, **evaluation**, and **visualization**.
-
----
-
-## Project Overview
-
-The aim of this project is to apply **Natural Language Processing (NLP)** and **Machine Learning** techniques to classify news articles efficiently and accurately.
-
-### Key Objectives
-- Clean and preprocess raw text data  
-- Extract features using **TF-IDF Vectorization**  
-- Handle class imbalance using **SMOTE**  
-- Train multiple ML models and compare performance  
-- Evaluate models using precision, recall, F1-score, and accuracy  
-- Visualize confusion matrices and performance metrics
+This project implements a complete News Article Classification system using Natural Language Processing (NLP), Machine Learning, Django, and Django REST Framework.  
+The system predicts the category of a news article based on its headline, short description, and keywords.  
+It includes a trained ML model and a Django API to serve real-time predictions.
 
 ---
 
-## Concepts Covered
-- Text preprocessing (tokenization, stopword removal, stemming, lemmatization)
-- Feature engineering with TF-IDF
-- Model selection and hyperparameter tuning using GridSearchCV
-- Handling class imbalance with SMOTE
-- Model evaluation (Accuracy, Precision, Recall, F1-score, ROC-AUC)
+## Features
+
+### Machine Learning
+- Text preprocessing (cleaning, stopword removal, stemming, lemmatization)
+- TF-IDF vectorization for feature extraction
+- Handling class imbalance using SMOTE
+- Model training using Logistic Regression, Naive Bayes, and SVM
+- Evaluation using accuracy, precision, recall, and F1-score
+
+### Django REST API
+- `/api/predict/` endpoint for predictions
+- DRF serializers for input validation
+- Integration of ML model, TF-IDF vectorizers, and preprocessing pipeline
+- JSON-based request and response format
 
 ---
 
-## Libraries Used
+## Project Structure
 
-- **pandas** — Data manipulation  
-- **numpy** — Numerical computation  
-- **matplotlib**, **seaborn** — Data visualization  
-- **nltk** — Natural Language Toolkit for text preprocessing  
-- **scikit-learn** — ML algorithms and evaluation metrics  
-- **imbalanced-learn (imblearn)** — SMOTE oversampling  
-- **tqdm** — Progress bar for loops  
+newsproject/
+    newsproject/
+        settings.py
+        urls.py
+    newsapi/
+        serializers.py
+        views.py
+        ml/
+            model.pkl
+            vectorizers.pkl
+            preprocessor.pkl
+            text_preprocessor.py
+            predict.py
+    README.md
+    requirements.txt
 
 ---
 
-## Project Workflow
+## Installation
 
-1. **Data Collection**  
-   Load and inspect the dataset of news articles.
+### 1. Clone the repository
 
-2. **Data Preprocessing**  
-   - Remove special characters, digits, and punctuation  
-   - Convert text to lowercase  
-   - Tokenize and remove stopwords  
-   - Apply stemming or lemmatization
-
-3. **Feature Extraction**  
-   Convert processed text into numerical vectors using **TF-IDF Vectorizer**.
-
-4. **Model Training**  
-   Train multiple algorithms such as:
-   - Logistic Regression  
-   - Naive Bayes  
-   - Support Vector Machine (SVM)
-
-5. **Handling Imbalance**  
-   Use **SMOTE (Synthetic Minority Oversampling Technique)** to balance classes.
-
-6. **Evaluation**  
-   Evaluate models using:
-   - `classification_report`
-   - `confusion_matrix`
-   - `accuracy_score`
-   - ROC and AUC metrics
-
-7. **Visualization**  
-   Plot confusion matrices and ROC curves using `matplotlib` and `seaborn`.
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
 
 
-## Installation & Usage
+### 2. Create a virtual environment
 
-### Clone the Repository
+
+python -m venv env
+env\Scripts\activate     # Windows
+source env/bin/activate  # Linux/Mac
+
+
+### 3. Install dependencies
+
 ```bash
-git clone https://github.com/alenpeter/news-article-classifier.git
-cd news-article-classifier
+pip install -r requirements.txt
+```
+
+### 4. Apply database migrations
+
+python manage.py migrate
+
+### 5. Start the server
+
+python manage.py runserver
+
+Server runs at:
+
+```
+http://127.0.0.1:8000/
+```
+
+## API Usage
+
+### Endpoint
+
+```
+POST /api/predict/
+```
+
+### Request Body (JSON)
+
+```json
+{
+    "headline": "Stock Market Surges",
+    "short_description": "Tech stocks lead strong rebound",
+    "keywords": "market, finance, stocks"
+}
+```
+
+### Response Format (JSON)
+
+```json
+{
+    "predicted_category": "BUSINESS",
+    "confidence_scores": {
+        "BUSINESS": 0.73,
+        "TECH": 0.14,
+        "WORLD NEWS": 0.06
+    }
+}
+```
+
+---
+
+## Machine Learning Pipeline
+
+### Text Preprocessing
+
+The preprocessing includes:
+
+* Removing HTML tags, URLs, punctuation, and digits
+* Converting text to lowercase
+* Tokenization
+* Stopword removal
+* Stemming using PorterStemmer
+* Lemmatization
+
+### Feature Engineering
+
+TF-IDF vectorizers are trained separately on:
+
+* headline
+* short_description
+* keywords
+
+The resulting matrices are combined using `scipy.sparse.hstack`.
+
+### Model Training
+
+Multiple algorithms were trained and evaluated.
+Logistic Regression performed best based on overall metrics.
+
+### Handling Class Imbalance
+
+SMOTE (Synthetic Minority Oversampling Technique) was used to balance the dataset.
+
+---
+
+## Evaluation
+
+Models were evaluated using:
+
+* Accuracy
+* Precision
+* Recall
+* F1-score
+* Confusion matrix
+* ROC-AUC curves
+
+Plots were generated using Matplotlib and Seaborn.
+
+---
+
+## Testing the API
+
+You can test the API using Thunder Client, Postman, or cURL.
+
+Example request:
+
+POST http://127.0.0.1:8000/api/predict/
+
+
+## Technologies Used
+
+* Python
+* Django
+* Django REST Framework
+* scikit-learn
+* imbalanced-learn
+* NLTK
+* pandas
+* numpy
+* matplotlib
+* seaborn
+
