@@ -26,22 +26,21 @@ It includes a trained ML model and a Django API to serve real-time predictions.
 ## Project Structure
 
 newsproject/
-    newsproject/
-        settings.py
-        urls.py
-    newsapi/
-        serializers.py
-        views.py
-        ml/
-            model.pkl
-            vectorizers.pkl
-            preprocessor.pkl
-            text_preprocessor.py
-            predict.py
-    README.md
-    requirements.txt
+│── newsproject/
+│   ├── settings.py
+│   ├── urls.py
+│── newsapi/
+│   ├── serializers.py
+│   ├── views.py
+│   ├── ml/
+│       ├── model.pkl
+│       ├── vectorizers.pkl
+│       ├── preprocessor.pkl
+│       ├── text_preprocessor.py
+│       ├── predict.py
+│── README.md
+│── requirements.txt
 
----
 
 ## Installation
 
